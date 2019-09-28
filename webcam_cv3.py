@@ -13,7 +13,7 @@ bodyCascade = cv2.CascadeClassifier(cv2.data.haarcascades+bodyCascPath)
 
 # log.basicConfig(filename='webcam.log', level=log.INFO)
 
-video_capture = cv2.VideoCapture(0)
+video_capture = cv2.VideoCapture("test-before.mp4")
 anterior = 0
 
 while True:
@@ -40,7 +40,7 @@ while True:
 
     faces = faceCascade.detectMultiScale(
         gray,
-        scaleFactor=1.2,
+        scaleFactor=1.1,
         minNeighbors=5,
         minSize=(30, 30),
     )
@@ -50,16 +50,16 @@ while True:
     #     minNeighbors=5,
     #     minSize=(10, 10),
     # )
-    bodies = bodyCascade.detectMultiScale(
-        gray,
-        # scaleFactor=1.2,
-        # minNeighbors=5,
-        # minSize=(10, 10),
-    )
+    # bodies = bodyCascade.detectMultiScale(
+    #     gray,
+    #     scaleFactor=1.2,
+    #     minNeighbors=5,
+    #     minSize=(10, 10),
+    # )
 
     # features = [*profiles, *faces]
-    features = [*bodies, *faces]
-    # features = faces
+    # features = [*bodies, *faces]
+    features = faces
     # features = bodies
     # features = profiles
     # Draw a rectangle around the faces
