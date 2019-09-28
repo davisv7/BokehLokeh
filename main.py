@@ -11,15 +11,15 @@ class Compressor:
         self.faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + faceCascPath)
 
         # profileCascPath = "haarcascade_profileface.xml"
-        # profileCascade = cv2.CascadeClassifier(cv2.data.haarcascades + profileCascPath)
+        # self.profileCascade = cv2.CascadeClassifier(cv2.data.haarcascades + profileCascPath)
         #
         # bodyCascPath = "haarcascade_fullbody.xml"
-        # bodyCascade = cv2.CascadeClassifier(cv2.data.haarcascades + bodyCascPath)
+        # self.bodyCascade = cv2.CascadeClassifier(cv2.data.haarcascades + bodyCascPath)
 
     def compress_frame(self, frame):
         shape = frame.shape
         width, height, _ = shape
-        pixelSize = 64
+        pixelSize = 16
         # Resize input to "pixelated" size
         temp = cv2.resize(frame, (pixelSize, pixelSize), interpolation=cv2.INTER_LINEAR)
         # Initialize output image
@@ -34,13 +34,13 @@ class Compressor:
             minNeighbors=5,
             # minSize=(30, 30),
         )
-        # profiles = profileCascade.detectMultiScale(
+        # profiles = self.profileCascade.detectMultiScale(
         #     gray,
         #     scaleFactor=1.2,
         #     minNeighbors=5,
         #     minSize=(10, 10),
         # )
-        # bodies = bodyCascade.detectMultiScale(
+        # bodies = self.bodyCascade.detectMultiScale(
         #     gray,
         #     scaleFactor=1.2,
         #     minNeighbors=5,
@@ -102,6 +102,6 @@ def main():
         print('{} kb/s'.format(len(imgbytes) // 1000))
         window.FindElement('image').Update(data=imgbytes)
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     main()
