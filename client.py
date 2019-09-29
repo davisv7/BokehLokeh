@@ -31,7 +31,7 @@ def main():
             msg_size = struct.unpack("L", message_size)[0]
             data = b''  ### CHANGED
             while len(data) < payload_size:
-                data += clientsocket.recv(4096)
+                data += clientsocket.recv(data_size)
             frame_data = data[:msg_size]
             data = data[msg_size:]
             # Extract frame
@@ -41,9 +41,8 @@ def main():
                 cv2.imshow('frame', frame)
                 cv2.waitKey(1)
                 # return frame
-                # print("received frame!")
-            else:
-                clientsocket.close()
+                print("received frame!")
+            clientsocket.close()
     except KeyboardInterrupt:
         clientsocket.close()
 
