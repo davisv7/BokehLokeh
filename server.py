@@ -6,7 +6,7 @@ import cv2
 
 
 def get_data(conn):
-    data_size = 1024
+    data_size = 4096
     data = b''  ### CHANGED
     payload_size = struct.calcsize("L")  ### CHANGED
 

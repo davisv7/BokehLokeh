@@ -9,7 +9,7 @@ from random import randint
 
 
 def main():
-    data_size = 1024
+    data_size = 4096
     cap = cv2.VideoCapture(0)
 
 
@@ -30,13 +30,15 @@ def main():
             clientsocket.sendall(message_size + data)
             frame_data = clientsocket.recv(data_size)
             # Extract frame
-            frame = pickle.loads(frame_data)
-            # Display
-            cv2.imshow('frame', frame)
-            cv2.waitKey(1)
-            # return frame
-            # print("received frame!")
-            clientsocket.close()
+            if not frame_data:
+                frame = pickle.loads(frame_data)
+                # Display
+                cv2.imshow('frame', frame)
+                cv2.waitKey(1)
+                # return frame
+                # print("received frame!")
+            else:
+                clientsocket.close()
     except KeyboardInterrupt:
         clientsocket.close()
 
