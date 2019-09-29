@@ -12,7 +12,7 @@ def main():
     data_size = 4096
     cap = cv2.VideoCapture(0)
 
-
+    payload_size = struct.calcsize("L")  ### CHANGED
     try:
         while True:
             clientsocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -28,7 +28,12 @@ def main():
 
             # Then data
             clientsocket.sendall(message_size + data)
-            frame_data = clientsocket.recv(data_size)
+
+            data = b''  ### CHANGED
+            while len(data) < payload_size:
+                data += clientsocket.recv(4096)
+            frame_data = data[:message_size]
+            data = data[message_size:]
             # Extract frame
             if frame_data:
                 frame = pickle.loads(frame_data)

@@ -24,7 +24,7 @@ def get_data(conn):
 
     frame_data = data[:msg_size]
     data = data[msg_size:]
-    return data
+    return frame_data
 
     # # Extract frame
     # frame = pickle.loads(frame_data)
@@ -35,16 +35,14 @@ def get_data(conn):
 
 
 def manage_clients(clients):
-    if len(clients) != 2:
-        return
-    else:
-        frame1 = get_data(clients[0])
-        frame2 = get_data(clients[1])
-        clients[0].send(frame1)
-        clients[1].send(frame2)
-        print('frames sent')
-        clients[0].close()
-        clients[1].close()
+    frame1 = get_data(clients[0])
+    frame2 = get_data(clients[1])
+    clients[0].send(frame1)
+    clients[1].send(frame2)
+    print('frames sent')
+    clients[0].close()
+    clients[1].close()
+
 
 def main():
     HOST = ''
@@ -62,7 +60,7 @@ def main():
     try:
         while True:
             print(clients)
-            if len(clients)<2:
+            if len(clients) < 2:
                 conn, addr = s.accept()
                 clients.append(conn)
             else:
@@ -70,4 +68,6 @@ def main():
                 clients = []
     except KeyboardInterrupt:
         s.close()
+
+
 main()
