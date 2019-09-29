@@ -30,7 +30,7 @@ def main():
             clientsocket.sendall(message_size + data)
             frame_data = clientsocket.recv(data_size)
             # Extract frame
-            if not frame_data:
+            if frame_data:
                 frame = pickle.loads(frame_data)
                 # Display
                 cv2.imshow('frame', frame)
