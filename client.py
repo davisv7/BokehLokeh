@@ -28,12 +28,12 @@ def main():
 
             # Then data
             clientsocket.sendall(message_size + data)
-
+            msg_size = struct.unpack("L", message_size)[0]
             data = b''  ### CHANGED
             while len(data) < payload_size:
                 data += clientsocket.recv(4096)
-            frame_data = data[:message_size]
-            data = data[message_size:]
+            frame_data = data[:msg_size]
+            data = data[msg_size:]
             # Extract frame
             if frame_data:
                 frame = pickle.loads(frame_data)
