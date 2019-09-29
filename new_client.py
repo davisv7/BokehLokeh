@@ -7,7 +7,7 @@ import numpy as np
 
 def main():
     context = zmq.Context()
-    pub_socket = context.socket(zmq.PUB)
+    pub_socket = context.socket(zmq.PAIR)
     pub_socket.connect('tcp://localhost:5555')
 
     camera = cv2.VideoCapture(0)  # init the camera
@@ -21,7 +21,7 @@ def main():
             pub_socket.send(jpg_as_text)
             frame = pub_socket.recv()
             img = base64.b64decode(frame)
-            npimg = np.fromstring(img, dtype=np.uint8)
+            npimg = np.frombuffer(img, dtype=np.uint8)
             source = cv2.imdecode(npimg, 1)
             cv2.imshow("Stream", frame)
             cv2.waitKey(source)
